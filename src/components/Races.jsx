@@ -1,8 +1,12 @@
-import { IoIosArrowForward } from "react-icons/io";
+import { useEffect, useState } from "react";
+import { getRaces } from "../api";
 export default function Races() {
-  const races = [
-    {index: 'dragonborn', name: 'Dragonborn'}
-  ]
+  const [races, setRaces] = useState([]);
+
+  useEffect(() => {
+    getRaces().then(setRaces);
+  }, []);
+
   return (
     <div className="flex select-none flex-col gap-4">
       {races.map((race) => (
@@ -15,11 +19,7 @@ export default function Races() {
             />
             <p className="font-bold">{race.name}</p>
           </div>
-          <button
-            className="text-xl text-sky-500"
-          >
-            <IoIosArrowForward />
-          </button>
+          <button className="text-xl text-sky-500">+</button>
         </div>
       ))}
     </div>
