@@ -1,4 +1,5 @@
 export default function Header() {
+  console.log("header");
   return (
     <div className="flex items-center gap-4">
       <div>
