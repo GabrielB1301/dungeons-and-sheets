@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getRaces } from "../api";
 import Modal from "./Modal";
 export default function Races() {
   const [races, setRaces] = useState([]);
   const [selectedRace, setSelectedRace] = useState(null);
+  const modal = useRef();
   useEffect(() => {
     getRaces().then(setRaces);
   }, []);
-  function handleModal(url) {
-    setSelectedRace(url);
-  }
+
+  useEffect(() => {
+    if (selectedRace) {
+      modal.current.open();
+    }
+  }, [selectedRace]);
+
   console.log("races");
   return (
     <div className="flex select-none flex-col gap-4">
@@ -27,14 +32,14 @@ export default function Races() {
             <p className="font-bold">{race.name}</p>
           </div>
           <button
-            onClick={() => handleModal(race.url)}
+            onClick={() => setSelectedRace(race.url)}
             className="text-xl text-sky-500"
           >
             +
           </button>
         </div>
       ))}
-      {selectedRace ? <Modal url={selectedRace} /> : null}
+      {selectedRace ? <Modal url={selectedRace} ref={modal} /> : null}
     </div>
   );
 }

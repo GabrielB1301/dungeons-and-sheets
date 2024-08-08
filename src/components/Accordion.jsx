@@ -1,14 +1,25 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Accordion() {
-  const [accordionOpen, setAccordionOpen] = useState(false);
-
+const Accordion = ({ url }) => {
+  const [accordionOpen, setAccordionOpen] = useState(true);
+  const [traitData, setTraitData] = useState();
+  useEffect(() => {
+    async function getTrait() {
+      const trait = await fetch("https://www.dnd5eapi.co" + url).then(
+        (response) => response.json(),
+      );
+      setTraitData(trait);
+    }
+    if (url) getTrait();
+  }, []);
+  console.log("accordion");
   return (
     <div className="p-4 backdrop-blur-lg">
       <button
         onClick={() => setAccordionOpen(!accordionOpen)}
         className="flex w-full justify-between"
       >
+        <span>{traitData?.name}</span>
         <svg
           className="ml-8 shrink-0 fill-indigo-500"
           width="16"
@@ -42,8 +53,10 @@ export default function Accordion() {
             : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <div className="overflow-hidden"></div>
+        <div className="overflow-hidden">{traitData?.desc[0]}</div>
       </div>
     </div>
   );
-}
+};
+
+export default Accordion;
