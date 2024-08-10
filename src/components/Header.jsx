@@ -1,7 +1,6 @@
 export default function Header() {
-  console.log("header");
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center justify-center gap-4">
       <div>
         <label htmlFor="picture" className="cursor-pointer">
           <img

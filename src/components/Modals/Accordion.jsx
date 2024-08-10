@@ -11,8 +11,7 @@ const Accordion = ({ url }) => {
       setTraitData(trait);
     }
     if (url) getTrait();
-  }, []);
-  console.log("accordion");
+  }, [url]);
   return (
     <div className="p-4 backdrop-blur-lg">
       <button
